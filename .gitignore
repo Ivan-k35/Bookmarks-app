@@ -9,3 +9,5 @@
 pyvenv.cfg
 .env
 identifier.sqlite
+cert.crt
+cert.key
