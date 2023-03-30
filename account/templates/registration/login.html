@@ -27,14 +27,19 @@
                 Forgotten your password?
             </a>
         </p>
-        <div class="social">
-            <ul>
-                <li class="facebook">
-                    <a href="{% url "social:begin" "facebook" %}">
-                        Sing in with Facebook
-                    </a>
-                </li>
-            </ul>
-        </div>
+    </div>
+    <div class="social">
+        <ul>
+            <li class="facebook">
+                <a href="{% url "social:begin" "facebook" %}">
+                    Sing in with Facebook
+                </a>
+            </li>
+            <li class="google">
+                <a href="{% url "social:begin" "google-oauth2" %}">
+                    Sing in with Google
+                </a>
+            </li>
+        </ul>
     </div>
 {% endblock %}
