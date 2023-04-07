@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.utils.text import slugify
 from django.urls import reverse
+from pytils import translit
 
 
 class Image(models.Model):
@@ -29,7 +30,7 @@ class Image(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title)
+            self.slug = slugify(translit.translify(self.title))
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):

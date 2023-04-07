@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'images.apps.ImagesConfig',
     'easy_thumbnails',
+    'pytils',
 ]
 
 MIDDLEWARE = [
