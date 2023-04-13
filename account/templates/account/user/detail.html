@@ -18,15 +18,16 @@
             <span class="total">{{ total_followers }}</span>
             follower{{ total_followers|pluralize }}
         </span>
-        <a href="#" data-pk="{{ user.pk }}"
-            data-action="{% if reqeust.user in user.followers.all %}un{% endif %}follow"
-            class="follow button">
-            {% if request.user not in user.followers.all %}
-                Follow
-            {% else %}
-                Unfollow
-            {% endif %}
-        </a>
+        {% if request.user.id != user.id %}
+            <a href="#" data-id="{{ user.id }}" data-action="{% if request.user in user.followers.all %}
+                un{% endif %}follow" class="follow button">
+                {% if request.user not in user.followers.all %}
+                    Follow
+                {% else %}
+                    Unfollow
+                {% endif %}
+            </a>
+        {% endif %}
         <div id="image-list" class="image-container">
             {% include "images/image/list_images.html" with images=user.images_created.all %}
         </div>
@@ -47,7 +48,7 @@
 
         // add request body
         var formData = new FormData();
-        formData.append('pk', followButton.dataset.pk);
+        formData.append('id', followButton.dataset.id);
         formData.append('action', followButton.dataset.action);
         options['body'] = formData;
 
@@ -56,20 +57,20 @@
         .then(response => response.json())
         .then(data => {
             if (data['status'] === 'ok')
-            {
-                var previousAction = followButton.dataset.action;
+                {
+                    var previousAction = followButton.dataset.action;
 
-                // toggle button text and data-action
-                var action = previousAction === 'follow' ? 'unfollow' : 'follow';
-                followButton.dataset.action = action;
-                followButton.innerHTML = action;
+                    // toggle button text and data-action
+                    var action = previousAction === 'follow' ? 'unfollow' : 'follow';
+                    followButton.dataset.action = action;
+                    followButton.innerHTML = action;
 
-                // update follower count
-                var followerCount = document.querySelector('span.count .total');
-                var totalFollowers = parseInt(followerCount.innerHTML);
-                followerCount.innerHTML = previousAction === 'follow' ? totalFollowers
-                + 1 : totalFollowers - 1;
-            }
+                    // update follower count
+                    var followerCount = document.querySelector('span.count .total');
+                    var totalFollowers = parseInt(followerCount.innerHTML);
+                    followerCount.innerHTML = previousAction === 'follow' ? totalFollowers + 1 :
+    totalFollowers - 1;
+                }
         })
-    })
+    });
 {% endblock %}

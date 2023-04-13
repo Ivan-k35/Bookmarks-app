@@ -43,20 +43,20 @@ def image_detail(request, pk, slug):
 @login_required
 @require_POST
 def image_like(request):
-    image_pk = request.POST.get('pk')
+    image_id = request.POST.get('id')
     action = request.POST.get('action')
-    if image_pk and action:
+    if image_id and action:
         try:
-            image = Image.objects.get(pk=image_pk)
+            image = Image.objects.get(id=image_id)
             if action == 'like':
                 image.users_like.add(request.user)
                 create_action(request.user, 'likes', image)
             else:
                 image.users_like.remove(request.user)
-            return JsonResponse({'status': 'ok'})
+            return JsonResponse({'status':'ok'})
         except Image.DoesNotExist:
             pass
-    return JsonResponse({'status': 'error'})
+    return JsonResponse({'status':'error'})
 
 
 @login_required
