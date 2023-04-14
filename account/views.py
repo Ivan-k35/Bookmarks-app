@@ -12,6 +12,7 @@ from django.http import JsonResponse
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm
 from .models import Profile, Contact
 from actions.utils import create_action
+from actions.models import Action
 
 
 # def user_login(request):
@@ -37,7 +38,15 @@ from actions.utils import create_action
 
 @login_required
 def dashboard(request):
-    return render(request, 'account/dashboard.html', {'section': 'dashboard'})
+    actions = Action.objects.exclude(user=request.user)
+    following_ids = request.user.following.values_list('id', flat=True)
+    if following_ids:
+        # If user is following others, retrieve only their actions
+        actions = actions.filter(user_id__in=following_ids)
+    actions = actions.select_related('user', 'user__profile') \
+                  .prefetch_related('target')[:10]
+    context = {'section': 'dashboard', 'actions': actions}
+    return render(request, 'account/dashboard.html', context)
 
 
 def register(request):
@@ -120,7 +129,7 @@ def user_follow(request):
             else:
                 Contact.objects.filter(user_from=request.user,
                                        user_to=user).delete()
-            return JsonResponse({'status':'ok'})
+            return JsonResponse({'status': 'ok'})
         except User.DoesNotExist:
-            return JsonResponse({'status':'error'})
-    return JsonResponse({'status':'error'})
+            return JsonResponse({'status': 'error'})
+    return JsonResponse({'status': 'error'})
