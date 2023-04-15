@@ -5,6 +5,7 @@ charset-normalizer==3.1.0
 cryptography==40.0.1
 defusedxml==0.7.1
 Django==4.2
+django-debug-toolbar==4.0.0
 django-extensions==3.2.1
 easy-thumbnails==2.8.5
 ecdsa==0.18.0
