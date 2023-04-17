@@ -13,6 +13,7 @@
                             class="button">Bookmark it</a></p>
     <p>You can <a href="{% url "edit" %}">edit your profile</a> or
         <a href="{% url "password_change" %}">change your password</a>.</p>
+    <a href="{% url "images:ranking" %}"><h2>Most popular images</h2></a>
     <h2>What's happening</h2>
     <div id="action-list">
         {% for action in actions %}

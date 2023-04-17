@@ -7,6 +7,7 @@
     <div id="image-list">
         {% include "images/image/list_images.html" %}
     </div>
+    <a href="{% url "images:ranking" %}"><h3>Most popular images</h3></a>
 {% endblock %}
 
 {% block domready %}
