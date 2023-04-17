@@ -36,6 +36,10 @@ from actions.models import Action
 #     return render(request, 'account/login.html', {'form': form})
 
 
+def home_page(request):
+    return render(request, 'account/index.html')
+
+
 @login_required
 def dashboard(request):
     actions = Action.objects.exclude(user=request.user)
