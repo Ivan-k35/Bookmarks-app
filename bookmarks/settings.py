@@ -87,6 +87,7 @@ DATABASES = {
         'NAME': 'bookmarks',
         'USER': os.getenv('USER_DB'),
         'PASSWORD': os.getenv('PASSWORD_DB'),
+        'HOST': 'db',  # Используйте имя службы из вашего Docker Compose файла в качестве хоста
     }
 }
 
